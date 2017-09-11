@@ -27,7 +27,7 @@ int main()
 	// INICIO DO PROGRAMA DEMO //
 
 	printf("Robotic Arm Control Console \n\n");
-	
+
 	serial_fd = abrir_porta();
 
 	if(serial_fd == -1)
@@ -39,6 +39,7 @@ int main()
 	{
 		printf("Serial port /dev/ttyS0 successfully opened!\n");
 
+
 		if(configurar_porta(serial_fd) == -1)
 		{
 		    printf("Erro while initializing port\n");
@@ -47,70 +48,48 @@ int main()
 		}
 
 		comando = (char*) malloc(sizeof(char)*BUFSIZE);
+		int joint = 0, position = 0;
 
-		//////////////////////
-		// PRIMEIRO COMANDO //
-		//////////////////////
-		printf("\nType your command in the format:\n #<canal>P<valor_posicao> \n");
-
-		sprintf(comando,"%s",HOME_POS);
-
-		//Escrevendo com teste de escrita
-		if(!enviar_comando(comando,serial_fd)!=-1)
+		while(joint >= 0)
 		{
-			printf("Problem sending command\nAbort program...");	
-			return -1;	
+			//////////////////////
+			// Envio de COMANDO //
+			//////////////////////
+
+			// NECESSÁRIO: Limpar a regiao de memória da string //
+			//             antes de mandar outro comando        //
+			memset(comando, 0, BUFSIZE);
+
+			printf("\nType your command in the format:\n #<canal>P<valor_posicao> \n");
+			printf("Joint {0,1,2,3,4} {-1 to exit}: ");
+			scanf("%d",&joint);
+			printf("Position: ");
+			scanf("%d",&position);
+			sprintf(comando,"#%dP%d",joint,trava(joint,position));
+
+			//Escrevendo com teste de escrita
+			if(enviar_comando(comando,serial_fd) == -1)
+			{
+				printf("Problem sending command\nAbort program...");
+				return -1;
+			}
+
+			printf("Pressione enter para continuar...");
+			getchar();
+
+	//		strcpy(comando,"#0P500");
+	//		sprintf(comando,"#%dP%d",SHL_SERVO,1000);
+	//		strcpy(comando,"#2P1500");
+	//		strcpy(comando,"#3P2000");
+	//		sprintf(comando,"#%dP%d",GRI_SERVO,1000);
+
 		}
 
-		printf("Pressione enter para continuar...");
-		getchar();
+			// FIM DO PROGRAMA DEMO //
+		  fechar_porta(serial_fd);
+			printf("\nAcesso a porta serial /dev/ttyS0 finalizado\n");
 
-		/////////////////////
-		// SEGUNDO COMANDO //
-		/////////////////////
-		printf("\nSEGUNDO COMANDO - MOVER O PUNHO\n");
-
-		printf("Espere 5 segundos...\n");
-		sleep(5);
-
-		// NECESSÁRIO: Limpar a regiao de memória da string //
-		//             antes de mandar outro comando        //
-		memset(comando, 0, BUFSIZE);
-
-//		strcpy(comando,"#0P500");
-//		sprintf(comando,"#%dP%d",SHL_SERVO,1000);
-//		strcpy(comando,"#2P1500");
-//		strcpy(comando,"#3P2000");
-//		sprintf(comando,"#%dP%d",GRI_SERVO,1000);
-
-		// TESTE DA FUNCAO TRAVA //
-		sprintf(comando,"#%dP%d",WRI_SERVO,trava(WRI_SERVO,429496729));
-
-		printf("Envio de comando sem teste de envio, utilizando a funcao trava: %s\n",comando);
-		enviar_comando(comando,serial_fd);
-
-		printf("Pressione enter para continuar...");
-		getchar();
-
-		//////////////////////
-		// TERCEIRO COMANDO //
-		//////////////////////
-		printf("\nTERCEIRO COMANDO - MOVER A GARRA\n");
-
-		printf("Espere 5 segundos...\n");
-		sleep(5);
-
-		memset(comando, 0, BUFSIZE);
-		sprintf(comando,"#%dP%d",GRI_SERVO,trava(GRI_SERVO,2000));
-		enviar_comando(comando,serial_fd);
-
-		printf("%s\n",comando);
-
-		// FIM DO PROGRAMA DEMO //
-	        fechar_porta(serial_fd);
-		printf("\nAcesso a porta serial /dev/ttyS0 finalizado\n");
-
-    	}
+  }
 
 	printf("\nPROGRAMA DEMONSTRACAO FINALIZADO\n\n");
 
