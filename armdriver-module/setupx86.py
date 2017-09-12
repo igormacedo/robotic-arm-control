@@ -2,10 +2,11 @@ from distutils.core import setup, Extension
 
 module1 = Extension('armdriver',
                     sources=['armdriver.c'],
-                    include_dirs=['../x64/include'],
+                    include_dirs=['../x86/include'],
                     libraries=['ufrn_lynx', 'm'],
-                    library_dirs=['../x64/lib'],
-                    extra_link_args=['-static'])
+                    library_dirs=['../x86/lib'],
+                    extra_compile_args=['-m32'],
+                    extra_link_args=['-m32'])
 
 setup(name='Armdriver',
       version='0.1',
