@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "ufrn_al5d.h"
 
 //Posicao inicial para todos os servos
