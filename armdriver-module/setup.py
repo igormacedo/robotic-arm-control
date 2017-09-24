@@ -5,7 +5,7 @@ module1 = Extension('armdriver',
                     include_dirs=['../x64/include'],
                     libraries=['ufrn_lynx', 'm'],
                     library_dirs=['../x64/lib'],
-                    extra_link_args=['-static'])
+                    extra_link_args=['-fPIC'])
 
 setup(name='Armdriver',
       version='0.1',
