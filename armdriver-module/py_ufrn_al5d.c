@@ -2,7 +2,7 @@
 /*       UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE         */
 /*   DEPARTAMENTO DE ENGENHARIA DE COMPUTAÇÃO E AUTOMAÇÃO    */
 /*							     																				 */
-/*        MODULO PYTHON DO DRIVER DO BRAÇO ROBÓTICO          */
+/*    MODULO PYTHON DO DRIVER DO BRAÇO ROBÓTICO LYNX AL5D    */
 /*							                                             */
 /*   DESENVOLVEDOR:					                                 */
 /*	- ENG. IGOR MACEDO SILVA                    	           */
@@ -217,12 +217,23 @@ static PyObject* py_ufrn_header(PyObject* self, PyObject* args)
 	printf("/*************************************************************/\n");
 	printf("/*       UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE         */\n");
 	printf("/*   DEPARTAMENTO DE ENGENHARIA DE COMPUTAÇÃO E AUTOMAÇÃO    */\n");
-	printf("/*							     */\n");
-	printf("/*        DRIVER DO BRAÇO ROBÓTICO LYNX AL5D - v2.0 	     */\n");
-	printf("/*							     */\n");
-	printf("/*   DESENVOLVEDORES:					     */\n");
-	printf("/*	- ENG. M.SC. DESNES AUGUSTO NUNES DO ROSÁRIO	     */\n");
-	printf("/*	- ENG. DANILO CHAVES DE SOUSA ICHIHARA		     */\n");
+	printf("/*							     																				 */\n");
+	printf("/*    MODULO PYTHON DO DRIVER DO BRAÇO ROBÓTICO LYNX AL5D    */\n");
+	printf("/*							                                             */\n");
+	printf("/*   DESENVOLVEDOR:					                                 */\n");
+	printf("/*	- ENG. IGOR MACEDO SILVA                    	           */\n");
+	printf("/*	                                        	               */\n");
+	printf("/*************************************************************/\n");
+	printf("/* ADAPTADO DE: */\n");
+	printf("/*************************************************************/\n");
+	printf("/*       UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE         */\n");
+	printf("/*   DEPARTAMENTO DE ENGENHARIA DE COMPUTAÇÃO E AUTOMAÇÃO    */\n");
+	printf("/*							                                             */\n");
+	printf("/*        DRIVER DO BRAÇO ROBÓTICO LYNX AL5D - v2.0 	       */\n");
+	printf("/*							                                             */\n");
+	printf("/*   DESENVOLVEDORES:					                               */\n");
+	printf("/*	- ENG. M.SC. DESNES AUGUSTO NUNES DO ROSÁRIO	           */\n");
+	printf("/*	- ENG. DANILO CHAVES DE SOUSA ICHIHARA		               */\n");
 	printf("/*************************************************************/\n\n");
 	Py_RETURN_NONE;
 }
@@ -242,5 +253,38 @@ static PyMethodDef armdriver_methods[] = {
 PyMODINIT_FUNC
 initarmdriver(void)
 {
-        (void) Py_InitModule("armdriver", armdriver_methods);
+        PyObject *module = Py_InitModule("armdriver", armdriver_methods);
+				if (PyModule_AddIntConstant (module, "BUFSIZE", BUFSIZE)) { goto except; };
+
+				// Servo da base HS-485HB //
+				if (PyModule_AddIntConstant (module, "BAS_SERVO", BAS_SERVO)) { goto except; };
+				if (PyModule_AddIntConstant (module, "BAS_MIN", BAS_MIN)) { goto except; };
+				if (PyModule_AddIntConstant (module, "BAS_MAX", BAS_MAX)) { goto except; };
+
+				// Servo do ombro HS-805BB //
+				if (PyModule_AddIntConstant (module, "SHL_SERVO", SHL_SERVO)) { goto except; };
+				if (PyModule_AddIntConstant (module, "SHL_MIN", SHL_MIN)) { goto except; };
+				if (PyModule_AddIntConstant (module, "SHL_MAX", SHL_MAX)) { goto except; };
+
+				// Servo do cotovelo HS-755HB//
+				if (PyModule_AddIntConstant (module, "ELB_SERVO", ELB_SERVO)) { goto except; };
+				if (PyModule_AddIntConstant (module, "ELB_MIN", ELB_MIN)) { goto except; };
+				if (PyModule_AddIntConstant (module, "ELB_MAX", ELB_MAX)) { goto except; };
+
+				// Servo do punho HS-645MG //
+				if (PyModule_AddIntConstant (module, "WRI_SERVO", WRI_SERVO)) { goto except; };
+				if (PyModule_AddIntConstant (module, "WRI_MIN", WRI_MIN)) { goto except; };
+				if (PyModule_AddIntConstant (module, "WRI_MAX", WRI_MAX)) { goto except; };
+
+				// Servo da garra HS-322HD //
+				if (PyModule_AddIntConstant (module, "GRI_SERVO", GRI_SERVO)) { goto except; };
+				if (PyModule_AddIntConstant (module, "GRI_MIN", GRI_MIN)) { goto except; };
+				if (PyModule_AddIntConstant (module, "GRI_MAX", GRI_MAX)) { goto except; };
+
+				goto finally;
+				except:
+					Py_XDECREF(module);
+					module = NULL;
+				finally:
+					return;
 }

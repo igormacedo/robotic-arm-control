@@ -9,6 +9,7 @@ Go to the module folder and run
 ```
 python setup.py build
 ```
+An then move the armdriver.so module to the same location as the python script you want to use the `import armdriver as lynx`
 
 #### Compiling code ####
 

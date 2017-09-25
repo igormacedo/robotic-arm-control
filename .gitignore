@@ -1,2 +1,5 @@
 # build folder
 armdriver-module/build
+
+# compiled driver
+armdriver.so
