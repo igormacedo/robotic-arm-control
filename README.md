@@ -1,9 +1,9 @@
 ## Robotic Arm control ##
 
 #### Compiling Python-C-Api Module - Armdriver ####
-You should have the i386 version of python dev
+You should have the a version of python dev
 ```
-sudo apt-get install libpython-dev:i386
+sudo apt-get install libpython-dev
 ```
 Go to the module folder and run
 ```
