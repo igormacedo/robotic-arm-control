@@ -1,4 +1,4 @@
-import time
+from time import sleep
 
 ##  Adding path to armdriver at runtime
 import sys
