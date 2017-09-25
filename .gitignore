@@ -2,4 +2,4 @@
 armdriver-module/build
 
 # compiled driver
-armdriver.so
+*.so
