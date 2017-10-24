@@ -36,7 +36,7 @@ else:
         print "Problema no envio do comando\nAbortando o programa..."
         quit()
 
-    input("Pressione enter para continuar...")
+    raw_input("Pressione enter para continuar...")
 
     #/////////////////////
     #// SEGUNDO COMANDO //
@@ -49,7 +49,7 @@ else:
     print "Envio de comando sem teste de envio, utilizando a funcao trava: " + comando
     enviar_comando(comando, serial_fd)
 
-    input("Pressione enter para continuar...")
+    raw_input("Pressione enter para continuar...")
 
 	#//////////////////////
 	#// TERCEIRO COMANDO //
@@ -58,7 +58,7 @@ else:
     print "Espere 5 segundos...\n"
     sleep(5)
 
-    comando = "#" + str(GRI_SERVO) + "P" + str(trava(WGI_SERVO,2000))
+    comando = "#" + str(GRI_SERVO) + "P" + str(trava(GRI_SERVO,2000))
     enviar_comando(comando, serial_fd)
 
     # FIM DO PROGRAMA DEMO
